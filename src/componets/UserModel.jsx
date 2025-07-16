@@ -10,6 +10,7 @@ const UserModel = () => {
     const [page,setPage]=useState(1);
     const [modal,setModal]=useState(false);
     const [details,setDetails] =useState("");
+    const [recentQueries,setRecentQueries]=useState([])
     let per_page=10;
 
     // useEffect(()=>{
@@ -32,6 +33,11 @@ const UserModel = () => {
 
    
 const handelQuery=async(page)=>{
+
+   setRecentQueries(prev => {
+    const updated = [query, ...prev.filter(item => item !== query)];
+    return updated.slice(0, 5);
+});
 setPage(page)
 if(!query.trim()){
     return;
@@ -46,7 +52,8 @@ setLoading(true)
             
         }finally{
             setLoading(false);
-        }    
+        }  
+         
         
 
 
@@ -86,9 +93,17 @@ catch(error){
 
   return (
     <div>
+        <h1>Github User Search</h1>
         <div>
             <input type="text" value={query} onChange={(e)=>{setQuery(e.target.value)}} placeholder='enter user you want to search'/>
             <button onClick={()=>handelQuery(1)}>Search</button>
+        </div>
+        <div>
+            <h4>Recent Searches</h4>
+            {console.log(recentQueries)}
+            {recentQueries.map((item,index)=>(
+                <button key={index}>{item}</button>
+            ))}
         </div>
        
 

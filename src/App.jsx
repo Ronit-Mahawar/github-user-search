@@ -4,7 +4,7 @@ import UserModel from './componets/UserModel'
 const App = () => {
   return (
     <>
-    <p>Github User Search</p>
+    
     
 
     <UserModel/>
